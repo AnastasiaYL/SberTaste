@@ -1,4 +1,4 @@
-package com.example.pizzaonline;
+package com.example.sbertaste;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
