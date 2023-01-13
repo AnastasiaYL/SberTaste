@@ -3,7 +3,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet id="1" author="alexey">
         <preConditions>
             <not>
@@ -11,7 +11,7 @@
             </not>
         </preConditions>
         <createTable tableName="pizza">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="id" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar">
@@ -27,7 +27,7 @@
             </not>
         </preConditions>
         <createTable tableName="customer">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="id" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar">
@@ -48,7 +48,7 @@
             </not>
         </preConditions>
         <createTable tableName="order">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="id" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="customer_id" type="int">
@@ -75,7 +75,7 @@
             </not>
         </preConditions>
         <createTable tableName="order_position">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="id" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="order_id" type="int">
@@ -97,5 +97,37 @@
         <addForeignKeyConstraint baseTableName="order_position" baseColumnNames="pizza_id"
                                  constraintName="fkey_order_position_pizza" referencedTableName="pizza"
                                  referencedColumnNames="id" onUpdate="CASCADE" onDelete="RESTRICT"/>
+    </changeSet>
+    <changeSet id="5" author="alexey">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="pizza_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="pizza_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="6" author="alexey">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="customer_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="customer_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="7" author="alexey">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="order_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="order_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="8" author="alexey">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="order_position_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="order_position_id_seq" startValue="1" incrementBy="1"/>
     </changeSet>
 </databaseChangeLog>
