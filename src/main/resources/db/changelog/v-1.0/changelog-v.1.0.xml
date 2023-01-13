@@ -20,4 +20,82 @@
             <column name="price" type="float"/>
         </createTable>
     </changeSet>
+    <changeSet id="2" author="alexey">
+        <preConditions>
+            <not>
+                <tableExists tableName="customer"/>
+            </not>
+        </preConditions>
+        <createTable tableName="customer">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="varchar">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="varchar">
+                <constraints nullable="true" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="alexey">
+        <preConditions>
+            <not>
+                <tableExists tableName="order"/>
+            </not>
+        </preConditions>
+        <createTable tableName="order">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="customer_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delivery_address" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="delivery_cost" type="float" defaultValue="100">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_timestamp" type="datetime" defaultValueComputed="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="order" baseColumnNames="customer_id"
+                                 constraintName="fkey_order_customer" referencedTableName="customer"
+                                 referencedColumnNames="id" onUpdate="CASCADE" onDelete="CASCADE"/>
+    </changeSet>
+    <changeSet id="4" author="alexey">
+        <preConditions>
+            <not>
+                <tableExists tableName="order_position"/>
+            </not>
+        </preConditions>
+        <createTable tableName="order_position">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pizza_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="order_position" baseColumnNames="order_id"
+                                 constraintName="fkey_order_position_order" referencedTableName="order"
+                                 referencedColumnNames="id" onUpdate="CASCADE" onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="order_position" baseColumnNames="pizza_id"
+                                 constraintName="fkey_order_position_pizza" referencedTableName="pizza"
+                                 referencedColumnNames="id" onUpdate="CASCADE" onDelete="RESTRICT"/>
+    </changeSet>
 </databaseChangeLog>
