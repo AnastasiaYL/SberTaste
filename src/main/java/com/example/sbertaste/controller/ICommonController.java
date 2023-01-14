@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface ICommonController<D extends IDto> {
 
-    @PostMapping("/")
+    @PostMapping
     D create(@RequestBody D dto);
 }
