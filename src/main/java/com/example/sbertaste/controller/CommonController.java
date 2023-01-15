@@ -3,7 +3,7 @@ package com.example.sbertaste.controller;
 import com.example.sbertaste.dto.IDto;
 import com.example.sbertaste.service.ICommonService;
 
-public class CommonController<S extends ICommonService<D>, D extends IDto> implements ICommonController<D> {
+public abstract class CommonController<S extends ICommonService<D>, D extends IDto> implements ICommonController<D> {
 
     private final S service;
 
