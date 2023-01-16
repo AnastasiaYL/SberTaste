@@ -4,10 +4,6 @@ import com.example.sbertaste.dto.CommonDto;
 import com.example.sbertaste.model.CommonEntity;
 import com.example.sbertaste.service.CommonService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.yaml.snakeyaml.events.Event;
-
-import java.io.Serializable;
 
 public abstract class CommonController<E extends CommonEntity, D extends CommonDto> {
 
