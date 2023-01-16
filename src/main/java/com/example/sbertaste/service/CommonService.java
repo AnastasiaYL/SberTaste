@@ -1,26 +1,19 @@
 package com.example.sbertaste.service;
 
-import com.example.sbertaste.dto.IDto;
-import com.example.sbertaste.model.IEntity;
+import com.example.sbertaste.model.CommonEntity;
 import com.example.sbertaste.repository.CommonRepository;
 
-public abstract class CommonService<R extends CommonRepository<E, ID>, E extends IEntity<ID>, ID, D extends IDto> implements ICommonService<D> {
+import java.io.Serializable;
 
-    private final R repository;
+public abstract class CommonService<E extends CommonEntity> {
 
-    public CommonService(R repository) {
+    private final CommonRepository<E> repository;
+
+    public CommonService(CommonRepository<E> repository) {
         this.repository = repository;
     }
 
-    @Override
-    public D create(D dto) {
-        E entity = mapToEntity(dto);
-        assert entity != null;
-        E saved = repository.save(entity);
-        return mapToDto(saved);
+    public E create(E entity) {
+        return repository.save(entity);
     }
-
-    public abstract E mapToEntity(D dto);
-
-    public abstract D mapToDto(E entity);
 }

@@ -1,18 +1,28 @@
 package com.example.sbertaste.controller;
 
-import com.example.sbertaste.dto.IDto;
-import com.example.sbertaste.service.ICommonService;
+import com.example.sbertaste.dto.CommonDto;
+import com.example.sbertaste.model.CommonEntity;
+import com.example.sbertaste.service.CommonService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.yaml.snakeyaml.events.Event;
 
-public abstract class CommonController<S extends ICommonService<D>, D extends IDto> implements ICommonController<D> {
+import java.io.Serializable;
 
-    private final S service;
+public abstract class CommonController<E extends CommonEntity, D extends CommonDto> {
 
-    public CommonController(S service) {
+    private final CommonService<E> service;
+
+    public CommonController(CommonService<E> service) {
         this.service = service;
     }
 
-    @Override
+    @PostMapping
     public D create(D dto) {
-        return service.create(dto);
+        return mapToDto(service.create(mapToEntity(dto)));
     }
+
+    public abstract E mapToEntity(D dto);
+
+    public abstract D mapToDto(E entity);
 }

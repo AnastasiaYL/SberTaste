@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "common_generator", sequenceName = "customer_id_seq", allocationSize = 1)
-public class CustomerEntity extends CommonEntity<Integer> {
+public class CustomerEntity extends CommonEntity {
 
     @Column(name = "name")
     private String name;

@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CustomerDto implements IDto {
+public class CustomerDto extends CommonDto {
     private Integer id;
     private String name;
     private String phone;
