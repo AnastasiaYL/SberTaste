@@ -130,4 +130,10 @@
         </preConditions>
         <createSequence sequenceName="order_position_id_seq" startValue="1" incrementBy="1"/>
     </changeSet>
+    <changeSet id="9" author="anastasia">
+        <preConditions>
+            <columnExists tableName="pizza" columnName="price"/>
+        </preConditions>
+        <modifyDataType tableName="pizza" columnName="price" newDataType="int"/>
+    </changeSet>
 </databaseChangeLog>

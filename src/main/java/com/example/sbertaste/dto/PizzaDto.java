@@ -10,5 +10,5 @@ import lombok.EqualsAndHashCode;
 public class PizzaDto extends CommonDto {
     private Integer id;
     private String name;
-    private double price;
+    private int price;
 }
