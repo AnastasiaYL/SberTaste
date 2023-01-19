@@ -3,7 +3,7 @@ package com.example.sbertaste.service;
 import com.example.sbertaste.model.CommonEntity;
 import com.example.sbertaste.repository.CommonRepository;
 
-import java.io.Serializable;
+import java.util.List;
 
 public abstract class CommonService<E extends CommonEntity> {
 
@@ -15,5 +15,21 @@ public abstract class CommonService<E extends CommonEntity> {
 
     public E create(E entity) {
         return repository.save(entity);
+    }
+
+    public E getOne(Integer id) {
+        return repository.findById(id).orElseThrow();
+    }
+
+    public E update(E entity) {
+        return repository.save(entity);
+    }
+
+    public void delete(Integer id) {
+        repository.deleteById(id);
+    }
+
+    public List<E> listAll() {
+        return repository.findAll();
     }
 }
