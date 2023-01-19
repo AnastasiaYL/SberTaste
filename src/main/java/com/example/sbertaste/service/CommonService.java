@@ -21,7 +21,8 @@ public abstract class CommonService<E extends CommonEntity> {
         return repository.findById(id).orElseThrow();
     }
 
-    public E update(E entity) {
+    public E update(E entity, Integer id) {
+        entity.setId(id);
         return repository.save(entity);
     }
 

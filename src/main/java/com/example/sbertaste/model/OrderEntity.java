@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "order")
@@ -24,9 +25,8 @@ public class OrderEntity extends CommonEntity {
     @Column(name = "delivery_address")
     private String deliveryAddress;
 
-//    @OneToMany
-//    @JoinColumn(name = "order_position_id")
-//    private List<OrderPositionEntity> orderPositions;
+    @OneToMany(mappedBy = "order")
+    private List<OrderPositionEntity> orderPositions;
 
     @Column(name = "delivery_cost")
     private Double deliveryCost;
