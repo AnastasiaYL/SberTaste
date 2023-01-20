@@ -11,12 +11,17 @@ import com.example.sbertaste.model.CommonEntity;
 import com.example.sbertaste.service.CommonService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @GenericController
 public abstract class CommonController<E extends CommonEntity, D extends CommonDto> {
@@ -67,9 +72,28 @@ public abstract class CommonController<E extends CommonEntity, D extends CommonD
 
     @DeleteMapping("/{id}")
     @Operation(description = "Delete object", method = "Delete")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Integer id) {
         service.delete(id);
     }
 
+    @ExceptionHandler({EmptyResultDataAccessException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleEmptyResultDataAccessException() {
+
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleArgumentNotValidException(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        return errors;
+    }
 }
