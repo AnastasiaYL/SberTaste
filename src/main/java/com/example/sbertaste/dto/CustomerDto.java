@@ -13,11 +13,11 @@ import javax.validation.constraints.NotBlank;
 @EqualsAndHashCode(callSuper = true)
 public class CustomerDto extends CommonDto {
 
-    @NotBlank(message = "Cannot be blank")
+    @NotBlank(message = "cannot be blank", groups = {New.class, Exist.class})
     private String name;
     @PhoneNumber(groups = {New.class, Exist.class})
     private String phone;
-    @Email(message = "Invalid email", groups = {New.class, Exist.class})
+    @Email(message = "invalid email", groups = {New.class, Exist.class})
     private String email;
 
 }

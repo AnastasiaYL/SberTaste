@@ -16,7 +16,7 @@ public class OpenApiConfig {
                         .description("Order pizza online!")
                         .title("SberTaste")
                         .version("v1.0")
-                        .contact(new Contact().name("Anastasiya L. & Alexey K."))
+                        .contact(new Contact().name("Anastasia L. & Alexey K."))
                 );
     }
 }

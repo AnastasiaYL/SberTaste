@@ -16,7 +16,7 @@ import javax.validation.constraints.Null;
 @NoArgsConstructor
 public abstract class CommonDto {
 
-    @Null(groups = {New.class}, message = "Must not be passed when creating")
-    @NotNull(groups = {Exist.class}, message = "Required when updating")
+    @Null(groups = {New.class}, message = "not required when creating")
+    @NotNull(groups = {Exist.class}, message = "required when updating")
     private Integer id;
 }

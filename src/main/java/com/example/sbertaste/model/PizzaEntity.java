@@ -17,7 +17,6 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "common_generator", sequenceName = "pizza_id_seq", allocationSize = 1)
 public class PizzaEntity extends CommonEntity {
 
-
     @Column(name = "name")
     private String name;
 
