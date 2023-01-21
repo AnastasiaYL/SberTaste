@@ -1,15 +1,15 @@
-package com.example.sbertaste.controller.exception;
+package com.example.sbertaste.exception;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 
-public class NotFoundException extends Exception {
-    public NotFoundException(String message) {
+public class STNotFoundException extends Exception {
+    public STNotFoundException(String message) {
         super(message);
     }
 
-    public NotFoundException(String... messages) {
+    public STNotFoundException(String... messages) {
         this(ArrayUtils.isNotEmpty(messages) ? Arrays.stream(messages).reduce((a, b) -> a + b).orElse("") : "");
     }
 }
