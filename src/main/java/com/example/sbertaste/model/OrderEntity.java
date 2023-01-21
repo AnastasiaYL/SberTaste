@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "\"order\"")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,25 +22,22 @@ public class OrderEntity extends CommonEntity {
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
-    @Column(name = "delivery_address")
-    private String deliveryAddress;
-
     @OneToMany(mappedBy = "order")
     private List<OrderPositionEntity> orderPositions;
 
     @Column(name = "delivery_cost")
-    private Double deliveryCost;
+    private double deliveryCost;
+
+    @Column(name = "delivery_address")
+    private String deliveryAddress;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "comment")
+    private String comment;
 
     @Column(name = "created_timestamp")
-    private Date createdWhen;
+    private LocalDateTime createdWhen;
 
-    @Override
-    public String toString() {
-        return "OrderEntity{" +
-                "customer=" + customer.getId() +
-                ", deliveryAddress='" + deliveryAddress + '\'' +
-                ", deliveryCost=" + deliveryCost +
-                ", createdWhen=" + createdWhen +
-                '}';
-    }
 }

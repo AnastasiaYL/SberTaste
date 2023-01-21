@@ -30,13 +30,4 @@ public class OrderPositionEntity extends CommonEntity {
     @Column(name = "price")
     private Integer price;
 
-    @Override
-    public String toString() {
-        return "OrderPositionEntity{" +
-                "order=" + order.getId() +
-                ", pizza=" + pizza.getId() +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                '}';
-    }
 }

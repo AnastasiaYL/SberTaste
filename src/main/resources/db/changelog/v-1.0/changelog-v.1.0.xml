@@ -136,4 +136,24 @@
         </preConditions>
         <modifyDataType tableName="pizza" columnName="price" newDataType="int"/>
     </changeSet>
+    <changeSet id="10" author="alexey">
+        <preConditions>
+            <columnExists tableName="order" columnName="customer_id"/>
+        </preConditions>
+        <dropNotNullConstraint tableName="order" columnName="customer_id"/>
+    </changeSet>
+    <changeSet id="11" author="alexey">
+        <preConditions>
+            <not>
+                <columnExists tableName="order" columnName="phone"/>
+                <columnExists tableName="order" columnName="comment"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="order">
+            <column name="phone" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="varchar"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
