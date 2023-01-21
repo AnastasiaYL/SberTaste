@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDtoWithCustomerAndPositions extends OrderDtoWithCustomer {
+public class OrderRequestDtoWithCustomerAndPositions extends OrderRequestDtoWithCustomer {
 
     private List<OrderPositionEntity> orderPositions;
 }

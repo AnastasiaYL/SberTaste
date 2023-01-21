@@ -1,12 +1,11 @@
 package com.example.sbertaste.controller;
 
-import com.example.sbertaste.annotation.DtoField;
+import com.example.sbertaste.annotation.DtoResponseField;
 import com.example.sbertaste.annotation.EntityField;
 import com.example.sbertaste.annotation.GenericController;
-import com.example.sbertaste.annotation.transfer.Exist;
-import com.example.sbertaste.annotation.transfer.New;
-import com.example.sbertaste.controller.exception.NotFoundException;
-import com.example.sbertaste.dto.CommonDto;
+import com.example.sbertaste.exception.STNotFoundException;
+import com.example.sbertaste.dto.CommonRequestDto;
+import com.example.sbertaste.dto.CommonResponseDto;
 import com.example.sbertaste.mapper.OrikaBeanMapper;
 import com.example.sbertaste.model.CommonEntity;
 import com.example.sbertaste.service.CommonService;
@@ -20,14 +19,15 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @GenericController
-public abstract class CommonController<E extends CommonEntity, D extends CommonDto> {
+public abstract class CommonController<E extends CommonEntity, DReq extends CommonRequestDto,
+        DResp extends CommonResponseDto> {
 
     @Autowired
     private OrikaBeanMapper mapper;
-    @DtoField
-    protected Class<D> dtoClass;
     @EntityField
     protected Class<E> entityClass;
+    @DtoResponseField
+    protected Class<DResp> dtoResponseClass;
 
     private final CommonService<E> service;
 
@@ -37,35 +37,36 @@ public abstract class CommonController<E extends CommonEntity, D extends CommonD
 
     @GetMapping("/listAll")
     @Operation(description = "Get all objects", method = "GetAll")
-    public List<D> getAll() {
-        return mapper.mapAsList(service.listAll(), dtoClass);
+    public List<DResp> getAll() {
+        return mapper.mapAsList(service.listAll(), dtoResponseClass);
     }
 
     @GetMapping("/{id}")
     @Operation(description = "Get object by ID", method = "GetOne")
-    public D getById(@NotNull @PathVariable Integer id) throws NotFoundException {
-        return mapper.map(service.getOne(id), dtoClass);
+    public DResp getById(@NotNull @PathVariable Integer id) throws STNotFoundException {
+        return mapper.map(service.getOne(id), dtoResponseClass);
     }
 
     @PostMapping
     @Operation(description = "Create object", method = "Create")
     @ResponseStatus(HttpStatus.CREATED)
-    public D create(@NotNull @RequestBody @Validated(New.class) D dto) {
+    public DResp create(@NotNull @Validated @RequestBody DReq dto) {
         return mapper.map(
                 service.save(mapper.map(dto, entityClass)),
-                dtoClass
+                dtoResponseClass
         );
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Operation(description = "Update object", method = "Update")
-    public D update(@NotNull @RequestBody @Validated(Exist.class) D dto) throws NotFoundException {
-        E entity = service.getOne(dto.getId());
+    public DResp update(@NotNull @Validated @RequestBody DReq dto,
+                        @NotNull @PathVariable Integer id) throws STNotFoundException {
+        E entity = service.getOne(id);
         mapper.map(dto, entity);
 
         return mapper.map(
                 service.save(entity),
-                dtoClass
+                dtoResponseClass
         );
     }
 

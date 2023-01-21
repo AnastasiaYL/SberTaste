@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface PhoneNumber {
 
-    String message() default "invalid phone number";
+    String message() default "Invalid phone number";
 
     Class<?>[] groups() default {};
 

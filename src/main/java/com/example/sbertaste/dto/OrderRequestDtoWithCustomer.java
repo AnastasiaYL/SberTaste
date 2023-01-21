@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDtoWithCustomer extends OrderDto {
+public class OrderRequestDtoWithCustomer extends OrderRequestDto {
 
     private CustomerEntity customer;
 }

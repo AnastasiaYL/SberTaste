@@ -1,6 +1,6 @@
 package com.example.sbertaste.service;
 
-import com.example.sbertaste.controller.exception.NotFoundException;
+import com.example.sbertaste.exception.STNotFoundException;
 import com.example.sbertaste.model.CommonEntity;
 import com.example.sbertaste.repository.CommonRepository;
 
@@ -18,9 +18,9 @@ public abstract class CommonService<E extends CommonEntity> {
         return repository.save(entity);
     }
 
-    public E getOne(Integer id) throws NotFoundException {
+    public E getOne(Integer id) throws STNotFoundException {
         return repository.findById(id).orElseThrow(
-                () -> new NotFoundException(String.format("No entity with id %d exists", id))
+                () -> new STNotFoundException(String.format("No object with id %d exists", id))
         );
     }
 

@@ -1,4 +1,4 @@
-package com.example.sbertaste.controller.exception;
+package com.example.sbertaste.exception.handler;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -10,13 +10,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SberTasteError {
+public class ErrorPrettyView {
 
     private String message;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> details;
 
-    public SberTasteError(String message) {
+    public ErrorPrettyView(String message) {
         this.message = message;
     }
 }

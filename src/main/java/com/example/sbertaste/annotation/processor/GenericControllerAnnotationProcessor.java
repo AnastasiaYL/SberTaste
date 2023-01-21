@@ -1,7 +1,7 @@
-package com.example.sbertaste.configuration;
+package com.example.sbertaste.annotation.processor;
 
 import com.example.sbertaste.annotation.GenericController;
-import com.example.sbertaste.annotation.DtoField;
+import com.example.sbertaste.annotation.DtoResponseField;
 import com.example.sbertaste.annotation.EntityField;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -38,8 +38,8 @@ public class GenericControllerAnnotationProcessor implements BeanPostProcessor {
 
                 if (field.isAnnotationPresent(EntityField.class)) {
                     setField(bean, field, genericTypes[0]);
-                } else if (field.isAnnotationPresent(DtoField.class)) {
-                    setField(bean, field, genericTypes[1]);
+                } else if (field.isAnnotationPresent(DtoResponseField.class)) {
+                    setField(bean, field, genericTypes[2]);
                 }
             };
 

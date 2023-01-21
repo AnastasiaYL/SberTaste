@@ -1,5 +1,6 @@
-package com.example.sbertaste.controller.exception;
+package com.example.sbertaste.exception.handler;
 
+import com.example.sbertaste.exception.STNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -17,37 +18,37 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class GlobalControllerExceptionHandler {
+public class ControllerExceptionHandler {
 
     private static final String VALIDATION_ERROR = "Validation error";
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<SberTasteError> constraintViolationExceptionHandler(@NotNull ConstraintViolationException exception) {
-        return error(VALIDATION_ERROR, getErrorDetails(exception), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorPrettyView> constraintViolationExceptionHandler(@NotNull ConstraintViolationException exception) {
+                return error(VALIDATION_ERROR, getErrorDetails(exception), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<SberTasteError> validationErrorHandler(@NotNull MethodArgumentNotValidException exception) {
+    public ResponseEntity<ErrorPrettyView> validationErrorHandler(@NotNull MethodArgumentNotValidException exception) {
         return error(VALIDATION_ERROR, getErrorDetails(exception), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({EmptyResultDataAccessException.class, NotFoundException.class})
-    public ResponseEntity<SberTasteError> handleNotFoundException(@NotNull Exception exception) {
+    @ExceptionHandler({EmptyResultDataAccessException.class, STNotFoundException.class})
+    public ResponseEntity<ErrorPrettyView> handleNotFoundException(@NotNull Exception exception) {
         return error(exception, HttpStatus.NOT_FOUND);
 
     }
 
-    private ResponseEntity<SberTasteError> error(Exception exception, HttpStatus httpStatus) {
+    private ResponseEntity<ErrorPrettyView> error(Exception exception, HttpStatus httpStatus) {
         String message = Optional.of(exception.getMessage()).orElse(exception.getClass().getSimpleName());
         return error(message, httpStatus);
     }
 
-    private ResponseEntity<SberTasteError> error(String message, HttpStatus httpStatus) {
-        return new ResponseEntity<>(new SberTasteError(message), httpStatus);
+    private ResponseEntity<ErrorPrettyView> error(String message, HttpStatus httpStatus) {
+        return new ResponseEntity<>(new ErrorPrettyView(message), httpStatus);
     }
 
-    private ResponseEntity<SberTasteError> error(String message, List<String> details, HttpStatus httpStatus) {
-        return new ResponseEntity<>(new SberTasteError(message, details), httpStatus);
+    private ResponseEntity<ErrorPrettyView> error(String message, List<String> details, HttpStatus httpStatus) {
+        return new ResponseEntity<>(new ErrorPrettyView(message, details), httpStatus);
     }
 
     private List<String> getErrorDetails(ConstraintViolationException exception) {
