@@ -1,5 +1,6 @@
 package com.example.sbertaste.exception.handler;
 
+import com.example.sbertaste.exception.STCartEmptyException;
 import com.example.sbertaste.exception.STNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -36,6 +37,11 @@ public class ControllerExceptionHandler {
     public ResponseEntity<ErrorPrettyView> handleNotFoundException(@NotNull Exception exception) {
         return error(exception, HttpStatus.NOT_FOUND);
 
+    }
+
+    @ExceptionHandler(STCartEmptyException.class)
+    public ResponseEntity<ErrorPrettyView> handleSTCartEmptyException(@NotNull Exception exception) {
+        return error(exception, HttpStatus.CONFLICT);
     }
 
     private ResponseEntity<ErrorPrettyView> error(Exception exception, HttpStatus httpStatus) {

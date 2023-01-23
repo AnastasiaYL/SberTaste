@@ -28,6 +28,9 @@ public class OrderEntity extends CommonEntity {
     @Column(name = "delivery_cost")
     private double deliveryCost;
 
+    @Column(name = "amount")
+    private double amount;
+
     @Column(name = "delivery_address")
     private String deliveryAddress;
 

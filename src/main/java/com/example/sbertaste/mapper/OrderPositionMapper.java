@@ -1,6 +1,6 @@
 package com.example.sbertaste.mapper;
 
-import com.example.sbertaste.dto.OrderPositionDto;
+import com.example.sbertaste.dto.OrderPositionResponseDto;
 import com.example.sbertaste.exception.STNotFoundException;
 import com.example.sbertaste.model.OrderPositionEntity;
 import com.example.sbertaste.service.PizzaService;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 @Component
-public class OrderPositionMapper extends CustomMapper<OrderPositionDto, OrderPositionEntity> {
+public class OrderPositionMapper extends CustomMapper<OrderPositionResponseDto, OrderPositionEntity> {
 
     private final PizzaService pizzaService;
 
@@ -20,16 +20,18 @@ public class OrderPositionMapper extends CustomMapper<OrderPositionDto, OrderPos
     }
 
     @Override
-    public void mapAtoB(OrderPositionDto orderPositionDto, OrderPositionEntity orderPositionEntity, MappingContext context) {
+    public void mapAtoB(OrderPositionResponseDto orderPositionResponseDto, OrderPositionEntity orderPositionEntity, MappingContext context) {
         try {
-            orderPositionEntity.setPizza(pizzaService.getOne(orderPositionDto.getPizzaId()));
+            orderPositionEntity.setPizza(pizzaService.getOne(orderPositionResponseDto.getPizzaId()));
         } catch (STNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    String.format("No pizza with id %d exists", orderPositionDto.getPizzaId()));
+                    String.format("No pizza with id %d exists", orderPositionResponseDto.getPizzaId()));
         }
     }
 
     @Override
-    public void mapBtoA(OrderPositionEntity orderPositionEntity, OrderPositionDto orderPositionDto, MappingContext context) {
+    public void mapBtoA(OrderPositionEntity orderPositionEntity, OrderPositionResponseDto orderPositionResponseDto, MappingContext context) {
+        orderPositionResponseDto.setPizzaId(orderPositionEntity.getPizza().getId());
+//        orderPositionResponseDto.setAmount(orderPositionEntity.getQuantity() * orderPositionEntity.getPrice());
     }
 }

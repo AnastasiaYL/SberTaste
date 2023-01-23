@@ -156,4 +156,24 @@
             <column name="comment" type="varchar"/>
         </addColumn>
     </changeSet>
+    <changeSet id="12" author="alexey">
+        <preConditions>
+            <not>
+                <columnExists tableName="order" columnName="amount"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="order">
+            <column name="amount" type="float"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="13" author="alexey">
+        <preConditions>
+            <not>
+                <columnExists tableName="order_position" columnName="amount"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="order_position">
+            <column name="amount" type="float"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

@@ -11,18 +11,19 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderPositionDto {
+public class OrderPositionResponseDto {
 
     //    private Integer orderId;
     private Integer pizzaId;
     private int quantity;
     private double price;
+    private double amount;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderPositionDto that = (OrderPositionDto) o;
+        OrderPositionResponseDto that = (OrderPositionResponseDto) o;
         return Objects.equals(pizzaId, that.pizzaId);
     }
 
@@ -31,11 +32,4 @@ public class OrderPositionDto {
         return Objects.hash(pizzaId);
     }
 
-    //    public OrderPositionDto(Integer id, Integer orderId, Integer pizzaId, Integer quantity, Integer price) {
-//        super(id);
-//        this.orderId = orderId;
-//        this.pizzaId = pizzaId;
-//        this.quantity = quantity;
-//        this.price = price;
-//    }
 }

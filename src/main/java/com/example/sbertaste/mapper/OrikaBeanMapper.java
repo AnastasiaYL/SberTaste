@@ -1,14 +1,16 @@
 package com.example.sbertaste.mapper;
 
+import com.example.sbertaste.dto.OrderPositionRequestDto;
+import com.example.sbertaste.dto.OrderPositionResponseDto;
 import com.example.sbertaste.dto.customer.CustomerRequestDto;
 import com.example.sbertaste.dto.customer.CustomerResponseDto;
 import com.example.sbertaste.dto.order.OrderDetailsDto;
-import com.example.sbertaste.dto.order.OrderDto;
 import com.example.sbertaste.dto.pizza.PizzaRequestDto;
 import com.example.sbertaste.dto.pizza.PizzaResponseDto;
 import com.example.sbertaste.model.CustomerEntity;
 import com.example.sbertaste.model.OrderEntity;
 import com.example.sbertaste.model.PizzaEntity;
+import com.example.sbertaste.service.PizzaService;
 import ma.glasnost.orika.Mapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
@@ -21,11 +23,13 @@ import java.util.Map;
 public class OrikaBeanMapper extends ConfigurableMapper {
 
     private MapperFactory factory;
+    private final PizzaService pizzaService;
 
     private final ApplicationContext applicationContext;
 
-    public OrikaBeanMapper(ApplicationContext applicationContext) {
+    public OrikaBeanMapper(PizzaService pizzaService, ApplicationContext applicationContext) {
         super(false);
+        this.pizzaService = pizzaService;
         this.applicationContext = applicationContext;
         init();
     }
@@ -56,7 +60,7 @@ public class OrikaBeanMapper extends ConfigurableMapper {
                 .byDefault()
                 .register();
 
-        factory.classMap(OrderEntity.class, OrderDto.class)
+        factory.classMap(OrderPositionRequestDto.class, OrderPositionResponseDto.class)
                 .byDefault()
                 .register();
     }

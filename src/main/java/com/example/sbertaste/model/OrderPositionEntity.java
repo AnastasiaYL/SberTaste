@@ -25,9 +25,12 @@ public class OrderPositionEntity extends CommonEntity {
     private PizzaEntity pizza;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     @Column(name = "price")
-    private Integer price;
+    private int price;
+
+    @Column(name = "amount")
+    private double amount;
 
 }
