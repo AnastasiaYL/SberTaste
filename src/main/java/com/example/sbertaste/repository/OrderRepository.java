@@ -20,11 +20,9 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
             "left join pizza p on op.pizza_id = p.id " +
             "group by p.name " +
             "order by quantity desc limit :count) a",
-            countQuery = "select p.name, sum(op.quantity) as quantity from order_position op " +
+            countQuery = "select count(op.pizza_id) from order_position op " +
                     "inner join \"order\" o on op.order_id = o.id and o.created_timestamp between :begin and :end " +
-                    "left join pizza p on op.pizza_id = p.id " +
-                    "group by p.name " +
-                    "order by quantity desc limit :count", nativeQuery = true)
+                    "group by op.pizza_id limit :count", nativeQuery = true)
     Page<PizzaBestSeller> getBestSellerByPeriod(@Param("count") int count,
                                                 @Param("begin") LocalDate begin,
                                                 @Param("end") LocalDate end,
@@ -37,7 +35,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
     Integer getIncomeByPeriod(@Param("begin") LocalDate begin, @Param("end") LocalDate end);
 
 
-    @Query(value = "select sum(op.quantity * op.price) * 1.0 / count(distinct o.id) " +
+    @Query(value = "select round(sum(op.quantity * op.price) * 1.0 / count(distinct o.id), 2) " +
             "from order_position op " +
             "inner join \"order\" o on op.order_id = o.id and o.created_timestamp between :begin and :end",
             nativeQuery = true)
