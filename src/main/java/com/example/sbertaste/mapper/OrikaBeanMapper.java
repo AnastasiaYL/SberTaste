@@ -7,10 +7,12 @@ import com.example.sbertaste.dto.customer.CustomerResponseDto;
 import com.example.sbertaste.dto.order.OrderDetailsDto;
 import com.example.sbertaste.dto.pizza.PizzaRequestDto;
 import com.example.sbertaste.dto.pizza.PizzaResponseDto;
-import com.example.sbertaste.model.CustomerEntity;
-import com.example.sbertaste.model.OrderEntity;
-import com.example.sbertaste.model.PizzaEntity;
-import com.example.sbertaste.service.PizzaService;
+import com.example.sbertaste.dto.role.RoleRequestDto;
+import com.example.sbertaste.dto.role.RoleResponseDto;
+import com.example.sbertaste.dto.user.UserRequestDto;
+import com.example.sbertaste.dto.user.UserResponseDto;
+import com.example.sbertaste.model.*;
+import com.example.sbertaste.service.RoleService;
 import ma.glasnost.orika.Mapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
@@ -23,13 +25,13 @@ import java.util.Map;
 public class OrikaBeanMapper extends ConfigurableMapper {
 
     private MapperFactory factory;
-    private final PizzaService pizzaService;
+    private final RoleService roleService;
 
     private final ApplicationContext applicationContext;
 
-    public OrikaBeanMapper(PizzaService pizzaService, ApplicationContext applicationContext) {
+    public OrikaBeanMapper(RoleService roleService, ApplicationContext applicationContext) {
         super(false);
-        this.pizzaService = pizzaService;
+        this.roleService = roleService;
         this.applicationContext = applicationContext;
         init();
     }
@@ -61,6 +63,26 @@ public class OrikaBeanMapper extends ConfigurableMapper {
                 .register();
 
         factory.classMap(OrderPositionRequestDto.class, OrderPositionResponseDto.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(UserResponseDto.class, UserEntity.class)
+                .customize(new UserMapperToEntity(roleService))
+                .register();
+
+        factory.classMap(UserEntity.class, UserResponseDto.class)
+                .customize(new UserMapperToDto())
+                .register();
+
+        factory.classMap(UserRequestDto.class, UserResponseDto.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(RoleEntity.class, RoleResponseDto.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(RoleRequestDto.class, RoleEntity.class)
                 .byDefault()
                 .register();
     }

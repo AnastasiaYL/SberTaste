@@ -176,4 +176,65 @@
             <column name="amount" type="float"/>
         </addColumn>
     </changeSet>
+    <changeSet id="14" author="anastasia">
+        <preConditions>
+            <not>
+                <tableExists tableName="user"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="15" author="anastasia">
+        <preConditions>
+            <not>
+                <tableExists tableName="role"/>
+            </not>
+        </preConditions>
+        <createTable tableName="role">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="description" type="varchar">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="16" author="anastasia">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="user_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="user_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="17" author="anastasia">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="role_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="role_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="18" author="anastasia">
+        <renameTable oldTableName="user" newTableName="users"/>
+    </changeSet>
 </databaseChangeLog>
