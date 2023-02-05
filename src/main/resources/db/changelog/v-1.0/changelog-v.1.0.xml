@@ -197,6 +197,7 @@
                                  referencedTableName="role" referencedColumnNames="id"/>
     </changeSet>
     <changeSet id="14" author="alexey">
-        <sqlFile path="scripts/init_data.sql"/>
+        <validCheckSum>ANY</validCheckSum>
+        <sqlFile path="scripts/demo_data.sql"/>
     </changeSet>
 </databaseChangeLog>

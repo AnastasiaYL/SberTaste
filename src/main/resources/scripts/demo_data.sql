@@ -7,7 +7,7 @@ values (1, 'Pepperoni', '670'),
        (6, 'Meat Royal', '860'),
        (7, 'Malevich', '950'),
        (8, 'Chicken pizza', '670'),
-       (9, 'Mushroom pizzargarita', '730'),
+       (9, 'Mushroom pizza', '730'),
        (10, 'President', '740');
 
 insert into "order" (id, customer_id, delivery_address, delivery_cost, created_timestamp, phone, comment)

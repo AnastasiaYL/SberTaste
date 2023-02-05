@@ -9,12 +9,12 @@ import com.example.sbertaste.dto.pizza.PizzaRequestDto;
 import com.example.sbertaste.dto.pizza.PizzaResponseDto;
 import com.example.sbertaste.dto.role.RoleRequestDto;
 import com.example.sbertaste.dto.role.RoleResponseDto;
-import com.example.sbertaste.dto.user.UserRequestDto;
 import com.example.sbertaste.dto.user.UserResponseDto;
 import com.example.sbertaste.model.*;
-import com.example.sbertaste.service.RoleService;
+import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.Mapper;
 import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.MappingContext;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -25,13 +25,11 @@ import java.util.Map;
 public class OrikaBeanMapper extends ConfigurableMapper {
 
     private MapperFactory factory;
-    private final RoleService roleService;
 
     private final ApplicationContext applicationContext;
 
-    public OrikaBeanMapper(RoleService roleService, ApplicationContext applicationContext) {
+    public OrikaBeanMapper(ApplicationContext applicationContext) {
         super(false);
-        this.roleService = roleService;
         this.applicationContext = applicationContext;
         init();
     }
@@ -66,16 +64,14 @@ public class OrikaBeanMapper extends ConfigurableMapper {
                 .byDefault()
                 .register();
 
-        factory.classMap(UserResponseDto.class, UserEntity.class)
-                .customize(new UserMapperToEntity(roleService))
-                .register();
-
         factory.classMap(UserEntity.class, UserResponseDto.class)
-                .customize(new UserMapperToDto())
-                .register();
-
-        factory.classMap(UserRequestDto.class, UserResponseDto.class)
                 .byDefault()
+                .customize(new CustomMapper<>() {
+                    @Override
+                    public void mapAtoB(UserEntity userEntity, UserResponseDto userResponseDto, MappingContext context) {
+                        userResponseDto.setRoleId(userEntity.getRole().getId());
+                    }
+                })
                 .register();
 
         factory.classMap(RoleEntity.class, RoleResponseDto.class)

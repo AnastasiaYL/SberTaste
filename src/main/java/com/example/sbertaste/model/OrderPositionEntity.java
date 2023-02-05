@@ -20,7 +20,7 @@ public class OrderPositionEntity extends CommonEntity {
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "pizza_id")
     private PizzaEntity pizza;
 
@@ -29,8 +29,5 @@ public class OrderPositionEntity extends CommonEntity {
 
     @Column(name = "price")
     private int price;
-
-//    @Column(name = "amount")
-//    private double amount;
 
 }
