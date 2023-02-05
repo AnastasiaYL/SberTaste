@@ -237,4 +237,12 @@
     <changeSet id="18" author="anastasia">
         <renameTable oldTableName="user" newTableName="users"/>
     </changeSet>
+    <changeSet id="19" author="anastasia">
+        <modifyDataType tableName="users" columnName="role_id" newDataType="int"/>
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="role_id"
+                                 constraintName="fkey_users_role"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"/>
+    </changeSet>
 </databaseChangeLog>
