@@ -17,10 +17,18 @@
             <column name="name" type="varchar">
                 <constraints unique="true" nullable="false"/>
             </column>
-            <column name="price" type="float"/>
+            <column name="price" type="int"/>
         </createTable>
     </changeSet>
     <changeSet id="2" author="alexey">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="pizza_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="pizza_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="3" author="alexey">
         <preConditions>
             <not>
                 <tableExists tableName="customer"/>
@@ -41,7 +49,15 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="3" author="alexey">
+    <changeSet id="4" author="alexey">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="customer_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="customer_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="5" author="alexey">
         <preConditions>
             <not>
                 <tableExists tableName="order"/>
@@ -52,14 +68,17 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="customer_id" type="int">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="delivery_address" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="delivery_cost" type="float" defaultValue="100">
+            <column name="delivery_cost" type="int" defaultValue="100">
+            </column>
+            <column name="phone" type="varchar">
                 <constraints nullable="false"/>
             </column>
+            <column name="comment" type="varchar"/>
             <column name="created_timestamp" type="datetime" defaultValueComputed="${now}">
                 <constraints nullable="false"/>
             </column>
@@ -68,7 +87,15 @@
                                  constraintName="fkey_order_customer" referencedTableName="customer"
                                  referencedColumnNames="id" onUpdate="CASCADE" onDelete="CASCADE"/>
     </changeSet>
-    <changeSet id="4" author="alexey">
+    <changeSet id="6" author="alexey">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="order_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="order_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="7" author="alexey">
         <preConditions>
             <not>
                 <tableExists tableName="order_position"/>
@@ -98,30 +125,6 @@
                                  constraintName="fkey_order_position_pizza" referencedTableName="pizza"
                                  referencedColumnNames="id" onUpdate="CASCADE" onDelete="RESTRICT"/>
     </changeSet>
-    <changeSet id="5" author="alexey">
-        <preConditions>
-            <not>
-                <sequenceExists sequenceName="pizza_id_seq"/>
-            </not>
-        </preConditions>
-        <createSequence sequenceName="pizza_id_seq" startValue="1" incrementBy="1"/>
-    </changeSet>
-    <changeSet id="6" author="alexey">
-        <preConditions>
-            <not>
-                <sequenceExists sequenceName="customer_id_seq"/>
-            </not>
-        </preConditions>
-        <createSequence sequenceName="customer_id_seq" startValue="1" incrementBy="1"/>
-    </changeSet>
-    <changeSet id="7" author="alexey">
-        <preConditions>
-            <not>
-                <sequenceExists sequenceName="order_id_seq"/>
-            </not>
-        </preConditions>
-        <createSequence sequenceName="order_id_seq" startValue="1" incrementBy="1"/>
-    </changeSet>
     <changeSet id="8" author="alexey">
         <preConditions>
             <not>
@@ -132,57 +135,11 @@
     </changeSet>
     <changeSet id="9" author="anastasia">
         <preConditions>
-            <columnExists tableName="pizza" columnName="price"/>
-        </preConditions>
-        <modifyDataType tableName="pizza" columnName="price" newDataType="int"/>
-    </changeSet>
-    <changeSet id="10" author="alexey">
-        <preConditions>
-            <columnExists tableName="order" columnName="customer_id"/>
-        </preConditions>
-        <dropNotNullConstraint tableName="order" columnName="customer_id"/>
-    </changeSet>
-    <changeSet id="11" author="alexey">
-        <preConditions>
             <not>
-                <columnExists tableName="order" columnName="phone"/>
-                <columnExists tableName="order" columnName="comment"/>
+                <tableExists tableName="users"/>
             </not>
         </preConditions>
-        <addColumn tableName="order">
-            <column name="phone" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="comment" type="varchar"/>
-        </addColumn>
-    </changeSet>
-    <changeSet id="12" author="alexey">
-        <preConditions>
-            <not>
-                <columnExists tableName="order" columnName="amount"/>
-            </not>
-        </preConditions>
-        <addColumn tableName="order">
-            <column name="amount" type="float"/>
-        </addColumn>
-    </changeSet>
-    <changeSet id="13" author="alexey">
-        <preConditions>
-            <not>
-                <columnExists tableName="order_position" columnName="amount"/>
-            </not>
-        </preConditions>
-        <addColumn tableName="order_position">
-            <column name="amount" type="float"/>
-        </addColumn>
-    </changeSet>
-    <changeSet id="14" author="anastasia">
-        <preConditions>
-            <not>
-                <tableExists tableName="user"/>
-            </not>
-        </preConditions>
-        <createTable tableName="user">
+        <createTable tableName="users">
             <column name="id" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -195,12 +152,20 @@
             <column name="name" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="role_id" type="varchar">
+            <column name="role_id" type="int">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="15" author="anastasia">
+    <changeSet id="10" author="anastasia">
+        <preConditions>
+            <not>
+                <sequenceExists sequenceName="users_id_seq"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="users_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="11" author="anastasia">
         <preConditions>
             <not>
                 <tableExists tableName="role"/>
@@ -218,15 +183,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="16" author="anastasia">
-        <preConditions>
-            <not>
-                <sequenceExists sequenceName="user_id_seq"/>
-            </not>
-        </preConditions>
-        <createSequence sequenceName="user_id_seq" startValue="1" incrementBy="1"/>
-    </changeSet>
-    <changeSet id="17" author="anastasia">
+    <changeSet id="12" author="anastasia">
         <preConditions>
             <not>
                 <sequenceExists sequenceName="role_id_seq"/>
@@ -234,15 +191,12 @@
         </preConditions>
         <createSequence sequenceName="role_id_seq" startValue="1" incrementBy="1"/>
     </changeSet>
-    <changeSet id="18" author="anastasia">
-        <renameTable oldTableName="user" newTableName="users"/>
-    </changeSet>
-    <changeSet id="19" author="anastasia">
-        <modifyDataType tableName="users" columnName="role_id" newDataType="int"/>
-        <addForeignKeyConstraint baseTableName="users"
-                                 baseColumnNames="role_id"
+    <changeSet id="13" author="anastasia">
+        <addForeignKeyConstraint baseTableName="users" baseColumnNames="role_id"
                                  constraintName="fkey_users_role"
-                                 referencedTableName="role"
-                                 referencedColumnNames="id"/>
+                                 referencedTableName="role" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="14" author="alexey">
+        <sqlFile path="scripts/init_data.sql"/>
     </changeSet>
 </databaseChangeLog>

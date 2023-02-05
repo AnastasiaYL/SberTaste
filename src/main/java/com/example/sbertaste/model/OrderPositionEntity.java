@@ -30,7 +30,7 @@ public class OrderPositionEntity extends CommonEntity {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "amount")
-    private double amount;
+//    @Column(name = "amount")
+//    private double amount;
 
 }

@@ -32,6 +32,6 @@ public class OrderPositionMapper extends CustomMapper<OrderPositionResponseDto, 
     @Override
     public void mapBtoA(OrderPositionEntity orderPositionEntity, OrderPositionResponseDto orderPositionResponseDto, MappingContext context) {
         orderPositionResponseDto.setPizzaId(orderPositionEntity.getPizza().getId());
-//        orderPositionResponseDto.setAmount(orderPositionEntity.getQuantity() * orderPositionEntity.getPrice());
+        orderPositionResponseDto.setAmount(orderPositionEntity.getQuantity() * orderPositionEntity.getPrice());
     }
 }

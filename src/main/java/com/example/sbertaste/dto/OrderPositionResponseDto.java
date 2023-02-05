@@ -16,8 +16,8 @@ public class OrderPositionResponseDto {
     //    private Integer orderId;
     private Integer pizzaId;
     private int quantity;
-    private double price;
-    private double amount;
+    private int price;
+    private int amount;
 
     @Override
     public boolean equals(Object o) {

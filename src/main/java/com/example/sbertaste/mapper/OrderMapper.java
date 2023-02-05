@@ -19,5 +19,9 @@ public class OrderMapper extends CustomMapper<OrderDto, OrderEntity> {
     public void mapBtoA(OrderEntity orderEntity, OrderDto orderDto, MappingContext context) {
         CustomerEntity customer = orderEntity.getCustomer();
         orderDto.setCustomerId(customer != null ? customer.getId() : null);
+        int sumOrderPositions = orderEntity.getOrderPositions().stream()
+                .mapToInt(position -> position.getPrice() * position.getQuantity())
+                .sum();
+        orderDto.setAmount(sumOrderPositions + orderEntity.getDeliveryCost());
     }
 }

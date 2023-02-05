@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@SequenceGenerator(name = "common_generator", sequenceName = "user_id_seq", allocationSize = 1)
+@SequenceGenerator(name = "common_generator", sequenceName = "users_id_seq", allocationSize = 1)
 public class UserEntity extends CommonEntity {
     @Column(name = "login")
     private String login;

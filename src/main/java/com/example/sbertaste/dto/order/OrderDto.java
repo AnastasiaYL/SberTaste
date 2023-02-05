@@ -10,8 +10,8 @@ import java.util.List;
 public class OrderDto {
 
     private Integer customerId;
-    private double deliveryCost;
-    private double amount;
+    private int deliveryCost;
+    private int amount;
     private String deliveryAddress;
     private String phone;
     private String comment;

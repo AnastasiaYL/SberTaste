@@ -14,5 +14,5 @@ import java.util.List;
 public class Cart {
 
     private List<OrderPositionResponseDto> orderPositions = new ArrayList<>();
-    private double amount;
+//    private int amount;
 }

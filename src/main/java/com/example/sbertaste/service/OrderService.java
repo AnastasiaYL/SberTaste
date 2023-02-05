@@ -21,6 +21,8 @@ import java.util.List;
 @Service
 public class OrderService {
 
+    private static final int DELIVERY_COST = 200;
+
     private final Cart cart;
     private final PizzaService pizzaService;
     private final OrderRepository orderRepository;
@@ -36,21 +38,23 @@ public class OrderService {
         this.mapper = mapper;
     }
 
-    public OrderPositionResponseDto addPosition(OrderPositionRequestDto orderPositionDto) throws STNotFoundException {
-        OrderPositionResponseDto response = mapper.map(orderPositionDto, OrderPositionResponseDto.class);
-
-        PizzaEntity pizzaEntity = pizzaService.getOne(response.getPizzaId());
-        response.setPrice(pizzaEntity.getPrice());
+    public OrderPositionResponseDto addPosition(OrderPositionRequestDto orderPositionRequestDto) throws STNotFoundException {
+        OrderPositionResponseDto response = mapper.map(orderPositionRequestDto, OrderPositionResponseDto.class);
 
         for (OrderPositionResponseDto cartPosition : cart.getOrderPositions()) {
             if (cartPosition.equals(response)) {
-                response.setQuantity(cartPosition.getQuantity() + response.getQuantity());
+                cartPosition.setQuantity(cartPosition.getQuantity() + response.getQuantity());
+                cartPosition.setAmount(cartPosition.getQuantity() * cartPosition.getPrice());
+                return cartPosition;
+//                response.setQuantity(cartPosition.getQuantity() + response.getQuantity());
             }
         }
 
+        PizzaEntity pizzaEntity = pizzaService.getOne(response.getPizzaId());
+        response.setPrice(pizzaEntity.getPrice());
         response.setAmount(response.getQuantity() * response.getPrice());
-        cart.setAmount(cart.getAmount() + response.getAmount());
         cart.getOrderPositions().add(response);
+//        cart.setAmount(cart.getAmount() + response.getAmount());
 
         return response;
     }
@@ -65,8 +69,8 @@ public class OrderService {
             throw new STCartEmptyException("Cart cannot be empty");
         }
 
-        orderEntity.setAmount(cart.getAmount());
-        orderEntity.setDeliveryCost(100D);
+//        orderEntity.setAmount(cart.getAmount());
+        orderEntity.setDeliveryCost(DELIVERY_COST);
         orderEntity.setCreatedWhen(LocalDateTime.now());
         var savedOrder = orderRepository.save(orderEntity);
 
