@@ -35,9 +35,9 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
     Integer getIncomeByPeriod(@Param("begin") LocalDate begin, @Param("end") LocalDate end);
 
 
-    @Query(value = "select round(sum(op.quantity * op.price) * 1.0 / count(distinct o.id), 2) " +
-            "from order_position op " +
-            "inner join \"order\" o on op.order_id = o.id and o.created_timestamp between :begin and :end",
+    @Query(value = "select round(avg(o.amount), 2) " +
+            "from order_with_amount o " +
+            "where o.created_timestamp between :begin and :end",
             nativeQuery = true)
     Double getAvgBill(@Param("begin") LocalDate begin, @Param("end") LocalDate plusDays);
 

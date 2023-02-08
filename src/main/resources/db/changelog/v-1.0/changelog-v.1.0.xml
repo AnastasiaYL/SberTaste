@@ -200,4 +200,24 @@
         <validCheckSum>ANY</validCheckSum>
         <sqlFile path="scripts/demo_data.sql"/>
     </changeSet>
+    <changeSet id="15" author="alexey">
+        <preConditions>
+            <not>
+                <viewExists viewName="order_with_amount"/>
+            </not>
+        </preConditions>
+        <createView viewName="order_with_amount">
+            SELECT o.id,
+                   o.customer_id,
+                   o.delivery_address,
+                   o.delivery_cost,
+                   o.phone,
+                   o.comment,
+                   o.created_timestamp,
+                   sum(op.quantity * op.price) AS amount
+            FROM "order" o
+                     LEFT JOIN order_position op ON o.id = op.order_id
+            GROUP BY o.id;
+        </createView>
+    </changeSet>
 </databaseChangeLog>
