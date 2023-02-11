@@ -1,6 +1,6 @@
 package com.example.sbertaste.mapper;
 
-import com.example.sbertaste.dto.OrderPositionResponseDto;
+import com.example.sbertaste.dto.orderPosition.OrderPositionResponseDto;
 import com.example.sbertaste.exception.STNotFoundException;
 import com.example.sbertaste.model.OrderPositionEntity;
 import com.example.sbertaste.service.PizzaService;

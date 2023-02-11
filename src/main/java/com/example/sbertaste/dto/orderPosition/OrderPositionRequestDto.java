@@ -1,4 +1,4 @@
-package com.example.sbertaste.dto;
+package com.example.sbertaste.dto.orderPosition;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

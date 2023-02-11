@@ -1,7 +1,7 @@
 package com.example.sbertaste.mapper;
 
-import com.example.sbertaste.dto.OrderPositionRequestDto;
-import com.example.sbertaste.dto.OrderPositionResponseDto;
+import com.example.sbertaste.dto.orderPosition.OrderPositionRequestDto;
+import com.example.sbertaste.dto.orderPosition.OrderPositionResponseDto;
 import com.example.sbertaste.dto.customer.CustomerRequestDto;
 import com.example.sbertaste.dto.customer.CustomerResponseDto;
 import com.example.sbertaste.dto.order.OrderDetailsDto;

@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class CommonService<E extends CommonEntity> {
 
-    private final CommonRepository<E> repository;
+    protected final CommonRepository<E> repository;
 
     public CommonService(CommonRepository<E> repository) {
         this.repository = repository;

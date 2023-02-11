@@ -1,4 +1,4 @@
-package com.example.sbertaste.dto;
+package com.example.sbertaste.dto.orderPosition;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,6 @@ import java.util.Objects;
 @AllArgsConstructor
 public class OrderPositionResponseDto {
 
-    //    private Integer orderId;
     private Integer pizzaId;
     private int quantity;
     private int price;

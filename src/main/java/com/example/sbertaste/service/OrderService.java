@@ -1,7 +1,7 @@
 package com.example.sbertaste.service;
 
-import com.example.sbertaste.dto.OrderPositionRequestDto;
-import com.example.sbertaste.dto.OrderPositionResponseDto;
+import com.example.sbertaste.dto.orderPosition.OrderPositionRequestDto;
+import com.example.sbertaste.dto.orderPosition.OrderPositionResponseDto;
 import com.example.sbertaste.dto.order.Cart;
 import com.example.sbertaste.exception.STCartEmptyException;
 import com.example.sbertaste.exception.STNotFoundException;
@@ -46,7 +46,6 @@ public class OrderService {
                 cartPosition.setQuantity(cartPosition.getQuantity() + response.getQuantity());
                 cartPosition.setAmount(cartPosition.getQuantity() * cartPosition.getPrice());
                 return cartPosition;
-//                response.setQuantity(cartPosition.getQuantity() + response.getQuantity());
             }
         }
 
@@ -54,7 +53,6 @@ public class OrderService {
         response.setPrice(pizzaEntity.getPrice());
         response.setAmount(response.getQuantity() * response.getPrice());
         cart.getOrderPositions().add(response);
-//        cart.setAmount(cart.getAmount() + response.getAmount());
 
         return response;
     }
@@ -69,7 +67,6 @@ public class OrderService {
             throw new STCartEmptyException("Cart cannot be empty");
         }
 
-//        orderEntity.setAmount(cart.getAmount());
         orderEntity.setDeliveryCost(DELIVERY_COST);
         orderEntity.setCreatedWhen(LocalDateTime.now());
         var savedOrder = orderRepository.save(orderEntity);

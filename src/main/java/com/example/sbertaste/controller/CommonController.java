@@ -72,7 +72,7 @@ public abstract class CommonController<E extends CommonEntity, DReq extends Comm
 
     @DeleteMapping("/{id}")
     @Operation(description = "Delete object", method = "Delete")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @ResponseStatus(value = HttpStatus.OK)
     public void deleteById(@PathVariable Integer id) {
         service.delete(id);
     }

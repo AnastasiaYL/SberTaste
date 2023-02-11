@@ -28,9 +28,6 @@ public class OrderEntity extends CommonEntity {
     @Column(name = "delivery_cost")
     private int deliveryCost;
 
-//    @Column(name = "amount")
-//    private double amount;
-
     @Column(name = "delivery_address")
     private String deliveryAddress;
 

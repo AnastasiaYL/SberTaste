@@ -46,6 +46,17 @@ values (1, 1, 1, 2, 670),
        (19, 6, 8, 1, 670),
        (20, 7, 9, 1, 730);
 
-SELECT pg_catalog.setval('pizza_id_seq', 10, true);
-SELECT pg_catalog.setval('order_id_seq', 12, true);
-SELECT pg_catalog.setval('order_position_id_seq', 20, true);
+insert into public.role (id, title, description)
+values (1, 'MANAGER', 'To manage'),
+       (2, 'BOSS', 'To control');
+
+insert into public.users (id, login, password, name, role_id)
+values (1, 'manager', 'manager', 'Ivan', 1),
+       (2, 'director', 'director', 'Stepan', 2);
+
+select pg_catalog.setval('pizza_id_seq', 10, true);
+select pg_catalog.setval('order_id_seq', 12, true);
+select pg_catalog.setval('order_position_id_seq', 20, true);
+select pg_catalog.setval('role_id_seq', 2, true);
+select pg_catalog.setval('users_id_seq', 2, true);
+

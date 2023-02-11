@@ -3,6 +3,8 @@ package com.example.sbertaste.controller;
 import com.example.sbertaste.dto.statistic.PizzaBestSeller;
 import com.example.sbertaste.dto.statistic.TopRequest;
 import com.example.sbertaste.service.StatisticService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,11 +14,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/statistic")
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Statistics API", description = "Director's statistics")
 public class StatisticController {
 
     private final StatisticService service;
