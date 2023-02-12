@@ -51,8 +51,8 @@ values (1, 'MANAGER', 'To manage'),
        (2, 'BOSS', 'To control');
 
 insert into public.users (id, login, password, name, role_id)
-values (1, 'manager', 'manager', 'Ivan', 1),
-       (2, 'director', 'director', 'Stepan', 2);
+values (1, 'manager', '$2a$12$jP7WI5umnmh4ZjtAbGpNseHZcyPOIGAZ0WTFhR8wP8U.EONu2DBqS', 'Ivan', 1),
+       (2, 'director', '$2a$12$QAO5eEYa3xCG3SwVZ61FKOGroZ5l3XCXXAIG8hMqfQRnDGroXBPbm', 'Stepan', 2);
 
 select pg_catalog.setval('pizza_id_seq', 10, true);
 select pg_catalog.setval('order_id_seq', 12, true);

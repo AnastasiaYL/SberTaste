@@ -34,8 +34,6 @@ public class AuthController {
         }
         UserEntity userEntity = userService.getByLogin(requestTokenDto.getLogin());
         String token = jwtTokenUtil.generateToken(userEntity);
-        System.out.println(userEntity.getAuthorities().toString());
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString());
         return ResponseEntity.ok().body(new UserResponseTokenDto(token));
     }
 }
