@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  deploy:
+    depends_on:
+      - postgres
+    container_name: SberTasteProject
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container:5432/sber_taste_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    volumes:
+      - sber_taste_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: "sber_taste_db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+
+volumes:
+  sber_taste_data:
