@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class OrderDetailsDto {
-
     private String deliveryAddress;
     @PhoneNumber
     private String phone;

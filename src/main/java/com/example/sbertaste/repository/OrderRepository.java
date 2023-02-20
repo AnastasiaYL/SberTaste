@@ -1,5 +1,7 @@
 package com.example.sbertaste.repository;
 
+import com.example.sbertaste.dto.statistic.CustomersToReturn;
+import com.example.sbertaste.dto.statistic.DailyStatistic;
 import com.example.sbertaste.dto.statistic.PizzaBestSeller;
 import com.example.sbertaste.model.OrderEntity;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,34 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
                                                 @Param("begin") LocalDate begin,
                                                 @Param("end") LocalDate end,
                                                 Pageable paging);
+
+    @Query(value = "select date(o.created_timestamp) as report_date, " +
+            "count(o.id) as daily_orders, " +
+            "sum(o.amount) as daily_income " +
+            "from order_with_amount o " +
+            "where o.created_timestamp between :begin and :end " +
+            "group by report_date ",
+            countQuery = "select date(o.created_timestamp) as report_date, count(o.id) " +
+                    "from order_with_amount o " +
+                    "where o.created_timestamp between :begin and :end group by report_date",
+            nativeQuery = true)
+    Page<DailyStatistic> getDailyStatistic(@Param("begin") LocalDate begin,
+                                           @Param("end") LocalDate end,
+                                           Pageable paging);
+
+    @Query(value = "select o.customer_id, c.name, o.phone, max (o.created_timestamp) as last_order_date " +
+            "from \"order\" o " +
+            "inner join customer c on o.customer_id = c.id " +
+            "group by o.customer_id, c.name, o.phone " +
+            "having max (o.created_timestamp) < now() - interval '1 day' " +
+            "and max (o.created_timestamp) > now() - interval '3 months'",
+            countQuery = "select o.customer_id, max (o.created_timestamp) as last_order_date " +
+                    "from \"order\" o " +
+                    "inner join customer c on o.customer_id = c.id " +
+                    "group by o.customer_id " +
+                    "having max (o.created_timestamp) < now() - interval '1 day' and max (o.created_timestamp) > now() - interval '3 months'",
+            nativeQuery = true)
+    Page<CustomersToReturn> getCustomersToReturn(Pageable paging);
 
     @Query(value = "select sum(op.quantity * op.price) " +
             "from order_position op " +

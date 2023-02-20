@@ -10,19 +10,28 @@ values (1, 'Pepperoni', '670'),
        (9, 'Mushroom pizza', '730'),
        (10, 'President', '740');
 
+insert into "customer" (id, name, phone, email)
+values (1, 'Анастасия', '+71234567890', 'anastasia@ya.ru'),
+       (2, 'Алексей', '+70987654321', 'aleksei@gmail.com'),
+       (3, 'Александр', '+79998887777', 'aleksandr@yandex.ru'),
+       (4, 'Анна', '+78887776666', 'anna@gmail.com'),
+       (5, 'Павел', '+76665554444', 'pavel@yandex.ru'),
+       (6, 'Юлия', '+75554443322', 'julia@ya.ru');
+
 insert into "order" (id, customer_id, delivery_address, delivery_cost, created_timestamp, phone, comment)
-values (1, null, 'б-р Мира, 7-12', 200, now() - interval '2 day', '+79524423952', 'Позвонить от подъезда'),
-       (2, null, 'б-р Мира, 7-20', 200, now() - interval '3 day', '+79524423955', 'Чаевые не даю, не плюйте в пиццу, пожалуйста'),
-       (3, null, 'б-р Мира, 7-12', 200, now() - interval '1 day', '+79524423952', 'Позвонить от подъезда'),
-       (4, null, 'пл. Ленина, 4-42', 200, now() - interval '1 day', '+79524425487', null),
-       (5, null, 'пл. Минина, 1-15', 200, now() - interval '2 day', '+79524423555', null),
-       (6, null, 'ул. Котова, 12-2', 200, now() - interval '3 day', '+79524423687', null),
-       (7, null, 'б-р Мира, 7-12', 200, now() - interval '3 day', '+79524423952', 'Позвонить от подъезда'),
-       (8, null, 'ул. Нестерова, 9', 200, now() - interval '4 day', '+79598729552', null),
-       (9, null, 'ул. Родионова, 15-70', 200, now() - interval '3 day', '+79004423952', null),
-       (10, null, 'ул. Иванова, 14-5', 200, now() - interval '2 day', '+70224423952', 'Уйду гулять - звоните за 15 мин.'),
-       (11, null, 'пр-т Ленина, 17-82', 200, now() - interval '1 day', '+79844423952', null),
-       (12, null, 'пр-т Ленина, 14-49', 200, now() - interval '4 day', '+79526623952', null);
+values (1, 1, 'б-р Мира, 7-12', 200, now() - interval '2 day', '+71234567890', 'Позвонить от подъезда'),
+       (2, 2, 'б-р Мира, 7-20', 200, now() - interval '3 day', '+70987654321',
+        'Чаевые не даю, не плюйте в пиццу, пожалуйста'),
+       (3, 5, 'б-р Мира, 7-12', 200, now() - interval '1 day', '+76665554444', 'Позвонить от подъезда'),
+       (4, 3, 'пл. Ленина, 4-42', 200, now() - interval '1 day', '+79998887777', null),
+       (5, 6, 'пл. Минина, 1-15', 200, now() - interval '2 day', '+75554443322', null),
+       (6, 4, 'ул. Котова, 12-2', 200, now() - interval '3 day', '+78887776666', null),
+       (7, 2, 'б-р Мира, 7-12', 200, now() - interval '3 day', '+70987654321', 'Позвонить от подъезда'),
+       (8, 6, 'ул. Нестерова, 9', 200, now() - interval '4 day', '+75554443322', null),
+       (9, 5, 'ул. Родионова, 15-70', 200, now() - interval '3 day', '+76665554444', null),
+       (10, 1, 'ул. Иванова, 14-5', 200, now() - interval '2 day', '+71234567890', 'Уйду гулять - звоните за 15 мин.'),
+       (11, 6, 'пр-т Ленина, 17-82', 200, now() - interval '1 day', '+75554443322', null),
+       (12, 2, 'пр-т Ленина, 14-49', 200, now() - interval '4 day', '+70987654321', null);
 
 insert into public.order_position (id, order_id, pizza_id, quantity, price)
 values (1, 1, 1, 2, 670),
@@ -59,4 +68,5 @@ select pg_catalog.setval('order_id_seq', 12, true);
 select pg_catalog.setval('order_position_id_seq', 20, true);
 select pg_catalog.setval('role_id_seq', 2, true);
 select pg_catalog.setval('users_id_seq', 2, true);
+select pg_catalog.setval('customer_id_seq', 6, true);
 

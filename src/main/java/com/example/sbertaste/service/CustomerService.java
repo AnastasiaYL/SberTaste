@@ -11,4 +11,7 @@ public class CustomerService extends CommonService<CustomerEntity> {
         super(repository);
     }
 
+    public CustomerEntity getCustomerByPhone(String phone) {
+        return ((CustomerRepository) repository).getCustomerEntityByPhone(phone);
+    }
 }

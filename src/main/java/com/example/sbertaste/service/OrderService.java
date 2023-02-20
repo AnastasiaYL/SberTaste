@@ -6,6 +6,7 @@ import com.example.sbertaste.dto.order.Cart;
 import com.example.sbertaste.exception.STCartEmptyException;
 import com.example.sbertaste.exception.STNotFoundException;
 import com.example.sbertaste.mapper.OrikaBeanMapper;
+import com.example.sbertaste.model.CustomerEntity;
 import com.example.sbertaste.model.OrderEntity;
 import com.example.sbertaste.model.OrderPositionEntity;
 import com.example.sbertaste.model.PizzaEntity;
@@ -17,6 +18,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OrderService {
@@ -25,14 +27,16 @@ public class OrderService {
 
     private final Cart cart;
     private final PizzaService pizzaService;
+    private final CustomerService customerService;
     private final OrderRepository orderRepository;
     private final OrderPositionRepository orderPositionRepository;
     private final OrikaBeanMapper mapper;
 
-    public OrderService(Cart cart, PizzaService pizzaService, OrderRepository orderRepository,
+    public OrderService(Cart cart, PizzaService pizzaService, CustomerService customerService, OrderRepository orderRepository,
                         OrderPositionRepository orderPositionRepository, OrikaBeanMapper mapper) {
         this.cart = cart;
         this.pizzaService = pizzaService;
+        this.customerService = customerService;
         this.orderRepository = orderRepository;
         this.orderPositionRepository = orderPositionRepository;
         this.mapper = mapper;
@@ -57,6 +61,22 @@ public class OrderService {
         return response;
     }
 
+    public void removePosition(int pizzaId) throws STNotFoundException {
+
+        for (OrderPositionResponseDto cartPosition : cart.getOrderPositions()) {
+            if (cartPosition.getPizzaId() == pizzaId) {
+                cart.getOrderPositions().remove(cartPosition);
+                return;
+            }
+        }
+
+        throw new STNotFoundException("No position with pizza_id " + pizzaId);
+    }
+
+    public void removeAllPositions() {
+        cart.getOrderPositions().clear();
+    }
+
     public List<OrderPositionResponseDto> getPositions() {
         return cart.getOrderPositions();
     }
@@ -69,6 +89,14 @@ public class OrderService {
 
         orderEntity.setDeliveryCost(DELIVERY_COST);
         orderEntity.setCreatedWhen(LocalDateTime.now());
+
+        CustomerEntity customer = customerService.getCustomerByPhone(orderEntity.getPhone());
+        if (Objects.isNull(customer)) {
+            customer = new CustomerEntity("No name", orderEntity.getPhone(), null);
+            customerService.save(customer);
+        }
+        orderEntity.setCustomer(customer);
+
         var savedOrder = orderRepository.save(orderEntity);
 
         orderEntity.setOrderPositions(mapper.mapAsList(cart.getOrderPositions(), OrderPositionEntity.class));

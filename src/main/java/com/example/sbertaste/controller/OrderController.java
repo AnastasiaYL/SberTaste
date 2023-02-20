@@ -33,16 +33,30 @@ public class OrderController {
     }
 
     @GetMapping("/cart/position")
-    @Operation(description = "Get all objects", method = "GetAll")
+    @Operation(description = "Get all positions", method = "GetAll")
     public List<OrderPositionResponseDto> getCart() {
         return service.getPositions();
     }
 
     @PostMapping("/cart/position")
-    @Operation(description = "Create object", method = "Create")
+    @Operation(description = "Create position", method = "Create")
     @ResponseStatus(HttpStatus.CREATED)
     public OrderPositionResponseDto create(@NotNull @RequestBody @Validated OrderPositionRequestDto orderPositionDto) throws STNotFoundException {
         return service.addPosition(orderPositionDto);
+    }
+
+    @DeleteMapping("/cart/position/{pizzaId}")
+    @Operation(description = "Delete position", method = "Delete")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void removePositionFromCart(@PathVariable int pizzaId) throws STNotFoundException {
+        service.removePosition(pizzaId);
+    }
+
+    @DeleteMapping("/cart/clear")
+    @Operation(description = "Delete all positions", method = "Delete")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void clearCart() {
+        service.removeAllPositions();
     }
 
     @PostMapping("/place")
