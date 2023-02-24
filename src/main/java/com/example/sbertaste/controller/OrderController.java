@@ -62,7 +62,7 @@ public class OrderController {
     @PostMapping("/place")
     public OrderDto placeOrder(@NotNull @RequestBody @Validated OrderDetailsDto dto) throws STCartEmptyException {
         return mapper.map(
-                service.placeOrder(mapper.map(dto, OrderEntity.class)),
+                service.placeOrder(mapper.map(dto, OrderEntity.class), dto.getName()),
                 OrderDto.class);
     }
 }

@@ -82,7 +82,7 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderEntity placeOrder(OrderEntity orderEntity) throws STCartEmptyException {
+    public OrderEntity placeOrder(OrderEntity orderEntity, String customerName) throws STCartEmptyException {
         if (cart.getOrderPositions().isEmpty()) {
             throw new STCartEmptyException("Cart cannot be empty");
         }
@@ -92,7 +92,7 @@ public class OrderService {
 
         CustomerEntity customer = customerService.getCustomerByPhone(orderEntity.getPhone());
         if (Objects.isNull(customer)) {
-            customer = new CustomerEntity("No name", orderEntity.getPhone(), null);
+            customer = new CustomerEntity(customerName, orderEntity.getPhone(), null);
             customerService.save(customer);
         }
         orderEntity.setCustomer(customer);
