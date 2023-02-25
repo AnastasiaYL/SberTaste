@@ -5,6 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <property name="now" value="localtimestamp" dbms="postgresql"/>
+    <property name="now" value="current_timestamp()" dbms="h2"/>
     <!-- Should be only links to per-version changelog files. -->
     <include file="v-1.0/changelog-v.1.0.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

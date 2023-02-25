@@ -196,7 +196,7 @@
                                  constraintName="fkey_users_role"
                                  referencedTableName="role" referencedColumnNames="id"/>
     </changeSet>
-    <changeSet id="14" author="alexey">
+    <changeSet id="14" author="alexey" dbms="postgresql">
         <validCheckSum>ANY</validCheckSum>
         <sqlFile path="scripts/demo_data.sql"/>
     </changeSet>
