@@ -31,6 +31,10 @@ public class OrderEntity extends CommonEntity {
     @Column(name = "delivery_address")
     private String deliveryAddress;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_id")
+    private DeliveryEntity delivery;
+
     @Column(name = "phone")
     private String phone;
 

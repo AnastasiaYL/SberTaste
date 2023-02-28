@@ -1,5 +1,6 @@
 package com.example.sbertaste.controller;
 
+import com.example.sbertaste.dto.order.DeliveryResponseDto;
 import com.example.sbertaste.dto.orderPosition.OrderPositionRequestDto;
 import com.example.sbertaste.dto.orderPosition.OrderPositionResponseDto;
 import com.example.sbertaste.dto.order.OrderDetailsDto;
@@ -32,6 +33,16 @@ public class OrderController {
         this.mapper = mapper;
     }
 
+    @GetMapping("/cart/delivery-cost")
+    public Integer getDeliveryCost(@RequestParam Integer deliveryId) throws STNotFoundException {
+        return service.getDeliveryCost(deliveryId);
+    }
+
+    @GetMapping("/cart/all-delivery-cost")
+    public List<DeliveryResponseDto> getAllDeliveryCost() {
+        return service.getAllDeliveryCost();
+    }
+
     @GetMapping("/cart/position")
     @Operation(description = "Get all positions", method = "GetAll")
     public List<OrderPositionResponseDto> getCart() {
@@ -60,7 +71,7 @@ public class OrderController {
     }
 
     @PostMapping("/place")
-    public OrderDto placeOrder(@NotNull @RequestBody @Validated OrderDetailsDto dto) throws STCartEmptyException {
+    public OrderDto placeOrder(@NotNull @RequestBody @Validated OrderDetailsDto dto) throws STCartEmptyException, STNotFoundException {
         return mapper.map(
                 service.placeOrder(mapper.map(dto, OrderEntity.class), dto.getName()),
                 OrderDto.class);

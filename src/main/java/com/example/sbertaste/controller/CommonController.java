@@ -29,7 +29,7 @@ public abstract class CommonController<E extends CommonEntity, DReq extends Comm
     @DtoResponseField
     protected Class<DResp> dtoResponseClass;
 
-    private final CommonService<E> service;
+    protected final CommonService<E> service;
 
     public CommonController(CommonService<E> service) {
         this.service = service;

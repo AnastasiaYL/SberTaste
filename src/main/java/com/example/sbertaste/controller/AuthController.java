@@ -5,12 +5,13 @@ import com.example.sbertaste.dto.user.UserResponseTokenDto;
 import com.example.sbertaste.model.UserEntity;
 import com.example.sbertaste.security.JwtTokenUtil;
 import com.example.sbertaste.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
@@ -41,5 +42,19 @@ public class AuthController {
 
         String token = jwtTokenUtil.generateToken(userEntity);
         return ResponseEntity.ok().body(new UserResponseTokenDto(token));
+    }
+
+    @SecurityRequirement(name = "Bearer Authentication")
+    @PutMapping(value = "/change-password")
+    public ResponseEntity<String> changePassword(@RequestParam String newPassword) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not authorized");
+        }
+
+        String login = user.getUsername();
+        UserEntity userEntity = userService.getByLogin(login);
+        return ResponseEntity.ok().body(userService.changePassword(userEntity, newPassword));
     }
 }

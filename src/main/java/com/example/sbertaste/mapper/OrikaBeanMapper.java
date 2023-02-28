@@ -1,10 +1,10 @@
 package com.example.sbertaste.mapper;
 
+import com.example.sbertaste.dto.order.DeliveryResponseDto;
 import com.example.sbertaste.dto.orderPosition.OrderPositionRequestDto;
 import com.example.sbertaste.dto.orderPosition.OrderPositionResponseDto;
 import com.example.sbertaste.dto.customer.CustomerRequestDto;
 import com.example.sbertaste.dto.customer.CustomerResponseDto;
-import com.example.sbertaste.dto.order.OrderDetailsDto;
 import com.example.sbertaste.dto.pizza.PizzaRequestDto;
 import com.example.sbertaste.dto.pizza.PizzaResponseDto;
 import com.example.sbertaste.dto.role.RoleRequestDto;
@@ -56,10 +56,6 @@ public class OrikaBeanMapper extends ConfigurableMapper {
                 .byDefault()
                 .register();
 
-        factory.classMap(OrderDetailsDto.class, OrderEntity.class)
-                .byDefault()
-                .register();
-
         factory.classMap(OrderPositionRequestDto.class, OrderPositionResponseDto.class)
                 .byDefault()
                 .register();
@@ -79,6 +75,10 @@ public class OrikaBeanMapper extends ConfigurableMapper {
                 .register();
 
         factory.classMap(RoleRequestDto.class, RoleEntity.class)
+                .byDefault()
+                .register();
+
+        factory.classMap(DeliveryEntity.class, DeliveryResponseDto.class)
                 .byDefault()
                 .register();
     }

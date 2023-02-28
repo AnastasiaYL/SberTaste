@@ -18,6 +18,10 @@ values (1, 'Анастасия', '+71234567890', 'anastasia@ya.ru'),
        (5, 'Павел', '+76665554444', 'pavel@yandex.ru'),
        (6, 'Юлия', '+75554443322', 'julia@ya.ru');
 
+insert into public.delivery (id, type, cost, minimal_cart_for_free_delivery)
+values (1, 'courier', 200, 1500),
+       (2, 'self-pickup', 0, 0);
+
 insert into "order" (id, customer_id, delivery_address, delivery_cost, created_timestamp, phone, comment)
 values (1, 1, 'б-р Мира, 7-12', 200, now() - interval '2 day', '+71234567890', 'Позвонить от подъезда'),
        (2, 2, 'б-р Мира, 7-20', 200, now() - interval '3 day', '+70987654321',
@@ -69,4 +73,4 @@ select pg_catalog.setval('order_position_id_seq', 20, true);
 select pg_catalog.setval('role_id_seq', 2, true);
 select pg_catalog.setval('users_id_seq', 2, true);
 select pg_catalog.setval('customer_id_seq', 6, true);
-
+select pg_catalog.setval('delivery_id_seq', 2, true);

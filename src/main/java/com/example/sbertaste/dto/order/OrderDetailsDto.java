@@ -7,6 +7,7 @@ import lombok.Data;
 public class OrderDetailsDto {
     private String name;
     private String deliveryAddress;
+    private int deliveryTypeId;
     @PhoneNumber
     private String phone;
     private String comment;

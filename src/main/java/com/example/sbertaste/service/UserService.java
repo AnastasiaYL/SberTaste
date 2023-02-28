@@ -29,4 +29,10 @@ public class UserService extends CommonService<UserEntity> {
     public boolean checkPassword(UserRequestTokenDto loginDto) {
         return bCryptPasswordEncoder.matches(loginDto.getPassword(), getByLogin(loginDto.getLogin()).getPassword());
     }
+
+    public String changePassword(UserEntity userEntity, String newPassword) {
+        userEntity.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        save(userEntity);
+        return "Password is changed successfully";
+    }
 }

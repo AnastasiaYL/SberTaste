@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class UserResponseDto extends CommonResponseDto {
     private String login;
-    private String password;
+//    private String password;
     private String name;
     private Integer roleId;
 }

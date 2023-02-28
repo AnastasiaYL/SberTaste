@@ -196,11 +196,7 @@
                                  constraintName="fkey_users_role"
                                  referencedTableName="role" referencedColumnNames="id"/>
     </changeSet>
-    <changeSet id="14" author="alexey" dbms="postgresql">
-        <validCheckSum>ANY</validCheckSum>
-        <sqlFile path="scripts/demo_data.sql"/>
-    </changeSet>
-    <changeSet id="15" author="alexey">
+    <changeSet id="14" author="alexey">
         <preConditions>
             <not>
                 <viewExists viewName="order_with_amount"/>
@@ -219,5 +215,61 @@
                      LEFT JOIN order_position op ON o.id = op.order_id
             GROUP BY o.id;
         </createView>
+    </changeSet>
+    <changeSet id="15" author="anastasia">
+        <preConditions>
+            <tableExists tableName="pizza"/>
+        </preConditions>
+        <addColumn tableName="pizza">
+            <column name="image_name" type="varchar" defaultValue="SberTasteLogo.jpeg"/>
+        </addColumn>
+        <addColumn tableName="pizza">
+            <column name="image_location"
+                    type="varchar"
+                    defaultValue="/Users/anastasial/IdeaProjects/sbertaste/target/classes/SberTasteLogo.jpeg"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="16" author="anastasia">
+        <preConditions>
+            <not>
+                <tableExists tableName="delivery"/>
+            </not>
+        </preConditions>
+        <createTable tableName="delivery">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cost" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="minimal_cart_for_free_delivery" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createSequence sequenceName="delivery_id_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+    <changeSet id="17" author="anastasia">
+        <preConditions>
+            <tableExists tableName="order"/>
+        </preConditions>
+        <addColumn tableName="order">
+            <column name="delivery_id"
+                    type="int"
+                    defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="order"
+                                 baseColumnNames="delivery_id"
+                                 constraintName="fkey_delivery_order"
+                                 referencedTableName="delivery"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="18" author="alexey" dbms="postgresql">
+        <validCheckSum>ANY</validCheckSum>
+        <sqlFile path="scripts/demo_data.sql"/>
     </changeSet>
 </databaseChangeLog>
