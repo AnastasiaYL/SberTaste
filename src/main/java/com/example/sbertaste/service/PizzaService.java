@@ -20,13 +20,13 @@ public class PizzaService extends CommonService<PizzaEntity> {
     }
 
     @Transactional
-    public PizzaEntity saveImage(byte[] content, String imageName, int pizzaId) throws Exception {
+    public void saveImage(byte[] content, String imageName, int pizzaId) throws Exception {
         String location = fileSystemRepository.saveImage(content, imageName);
 
         PizzaEntity pizza = getOne(pizzaId);
         pizza.setImageName(imageName);
         pizza.setImageLocation(location);
-        return repository.save(pizza);
+        repository.save(pizza);
     }
 
     public FileSystemResource findImageByPizzaId(int pizzaId) throws STNotFoundException {

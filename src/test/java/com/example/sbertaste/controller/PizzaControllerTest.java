@@ -1,6 +1,7 @@
 package com.example.sbertaste.controller;
 
 import com.example.sbertaste.dto.pizza.PizzaRequestDto;
+import com.example.sbertaste.exception.STNotFoundException;
 import com.example.sbertaste.repository.PizzaRepository;
 import com.example.sbertaste.service.PizzaService;
 import lombok.SneakyThrows;
@@ -14,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.mock.web.MockMultipartFile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -28,7 +31,7 @@ class PizzaControllerTest {
     @SpyBean
     private PizzaService service;
     @SpyBean
-    private  PizzaRepository repository;
+    private PizzaRepository repository;
 
     @Test
     @Order(1)
@@ -80,6 +83,25 @@ class PizzaControllerTest {
 
     @Test
     @Order(5)
+    void uploadImage() throws Exception {
+        MockMultipartFile testFile = new MockMultipartFile("file", "test.jpg",
+                "image/jpg", "test".getBytes());
+        controller.uploadImage(1, testFile);
+
+        assertEquals("test.jpg", service.getOne(1).getImageName());
+    }
+
+    @Test
+    @Order(6)
+    void downloadImage() throws STNotFoundException {
+        String imageFileName = controller.downloadImage(1).getFilename();
+
+        assert imageFileName != null;
+        assertTrue(imageFileName.contains("test.jpg"));
+    }
+
+    @Test
+    @Order(7)
     void deleteById() {
         controller.deleteById(1);
 

@@ -32,7 +32,7 @@ public class UserService extends CommonService<UserEntity> {
 
     public String changePassword(UserEntity userEntity, String newPassword) {
         userEntity.setPassword(bCryptPasswordEncoder.encode(newPassword));
-        save(userEntity);
+        super.save(userEntity);
         return "Password is changed successfully";
     }
 }

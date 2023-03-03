@@ -8,7 +8,9 @@ import com.example.sbertaste.service.PizzaService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,12 +46,14 @@ public class PizzaController extends CommonController<PizzaEntity, PizzaRequestD
 
     @PostMapping(value = "/image/upload/{pizzaId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @SecurityRequirement(name = "Bearer Authentication")
-    public PizzaEntity uploadImage(@PathVariable int pizzaId, @RequestParam("File") MultipartFile image) throws Exception {
-        return service.saveImage(image.getBytes(), image.getOriginalFilename(), pizzaId);
+    public ResponseEntity<String> uploadImage(@PathVariable int pizzaId, @RequestParam("File") MultipartFile image) throws Exception {
+        service.saveImage(image.getBytes(), image.getOriginalFilename(), pizzaId);
+        return ResponseEntity.ok().body("Image uploaded successfully");
     }
 
     @GetMapping(value = "/image/download/{pizzaId}",
             produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    @ResponseStatus(value = HttpStatus.OK)
     public FileSystemResource downloadImage(@PathVariable int pizzaId) throws STNotFoundException {
         return service.findImageByPizzaId(pizzaId);
     }

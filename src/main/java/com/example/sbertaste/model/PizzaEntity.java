@@ -1,6 +1,7 @@
 package com.example.sbertaste.model;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "common_generator", sequenceName = "pizza_id_seq", allocationSize = 1)
+@DynamicInsert
 public class PizzaEntity extends CommonEntity {
 
     @Column(name = "name")

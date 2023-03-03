@@ -67,8 +67,8 @@ public class StatisticController {
     }
 
     @GetMapping("/income")
-    public Integer getBestSeller(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate begin,
-                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+    public Integer getIncomeByPeriod(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate begin,
+                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         return service.getIncomeByPeriod(begin, end);
     }
 
