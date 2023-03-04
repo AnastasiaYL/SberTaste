@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -32,6 +33,9 @@ class PizzaControllerTest {
     private PizzaService service;
     @SpyBean
     private PizzaRepository repository;
+
+    @Value("${images.location}")
+    private String location;
 
     @Test
     @Order(1)
@@ -88,7 +92,7 @@ class PizzaControllerTest {
                 "image/jpg", "test".getBytes());
         controller.uploadImage(1, testFile);
 
-        assertEquals("test.jpg", service.getOne(1).getImageName());
+        assertEquals(location + "test.jpg", service.getOne(1).getImgFile());
     }
 
     @Test

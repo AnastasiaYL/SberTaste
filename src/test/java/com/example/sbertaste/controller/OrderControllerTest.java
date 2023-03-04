@@ -46,8 +46,7 @@ class OrderControllerTest {
 
     @BeforeAll
     void prepare() {
-        PizzaEntity newPizza = new PizzaEntity("Pepperoni", 600, "SberTasteLogo.jpeg",
-                "/Users/anastasial/IdeaProjects/sbertaste/target/classes/SberTasteLogo.jpeg");
+        PizzaEntity newPizza = new PizzaEntity("Pepperoni", 600, "\\images\\logo.jpeg");
         pizzaService.save(newPizza);
 
         DeliveryEntity newDelivery = new DeliveryEntity("Courier", 200, 1500);
@@ -138,7 +137,7 @@ class OrderControllerTest {
     }
 
     @Test
-    void removePositionWithEmptyCart() throws STNotFoundException {
+    void removePositionWithEmptyCart() {
 
         assertThrows(STNotFoundException.class, () -> controller.removePositionFromCart(1));
     }

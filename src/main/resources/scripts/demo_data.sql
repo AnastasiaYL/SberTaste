@@ -22,20 +22,20 @@ insert into public.delivery (id, type, cost, minimal_cart_for_free_delivery)
 values (1, 'courier', 200, 1500),
        (2, 'self-pickup', 0, 0);
 
-insert into "order" (id, customer_id, delivery_address, delivery_cost, created_timestamp, phone, comment)
-values (1, 1, 'б-р Мира, 7-12', 200, now() - interval '2 day', '+71234567890', 'Позвонить от подъезда'),
+insert into "order" (id, customer_id, delivery_address, delivery_cost, created_timestamp, phone, comment, delivery_id)
+values (1, 1, 'б-р Мира, 7-12', 200, now() - interval '2 day', '+71234567890', 'Позвонить от подъезда', 1),
        (2, 2, 'б-р Мира, 7-20', 200, now() - interval '3 day', '+70987654321',
-        'Чаевые не даю, не плюйте в пиццу, пожалуйста'),
-       (3, 5, 'б-р Мира, 7-12', 200, now() - interval '1 day', '+76665554444', 'Позвонить от подъезда'),
-       (4, 3, 'пл. Ленина, 4-42', 200, now() - interval '1 day', '+79998887777', null),
-       (5, 6, 'пл. Минина, 1-15', 200, now() - interval '2 day', '+75554443322', null),
-       (6, 4, 'ул. Котова, 12-2', 200, now() - interval '3 day', '+78887776666', null),
-       (7, 2, 'б-р Мира, 7-12', 200, now() - interval '3 day', '+70987654321', 'Позвонить от подъезда'),
-       (8, 6, 'ул. Нестерова, 9', 200, now() - interval '4 day', '+75554443322', null),
-       (9, 5, 'ул. Родионова, 15-70', 200, now() - interval '3 day', '+76665554444', null),
-       (10, 1, 'ул. Иванова, 14-5', 200, now() - interval '2 day', '+71234567890', 'Уйду гулять - звоните за 15 мин.'),
-       (11, 6, 'пр-т Ленина, 17-82', 200, now() - interval '1 day', '+75554443322', null),
-       (12, 2, 'пр-т Ленина, 14-49', 200, now() - interval '4 day', '+70987654321', null);
+        'Чаевые не даю, не плюйте в пиццу, пожалуйста', 1),
+       (3, 5, 'б-р Мира, 7-12', 200, now() - interval '1 day', '+76665554444', 'Позвонить от подъезда', 1),
+       (4, 3, 'пл. Ленина, 4-42', 200, now() - interval '1 day', '+79998887777', null, 1),
+       (5, 6, 'пл. Минина, 1-15', 200, now() - interval '2 day', '+75554443322', null, 1),
+       (6, 4, 'ул. Котова, 12-2', 200, now() - interval '3 day', '+78887776666', null, 1),
+       (7, 2, 'б-р Мира, 7-12', 200, now() - interval '3 day', '+70987654321', 'Позвонить от подъезда', 1),
+       (8, 6, 'ул. Нестерова, 9', 200, now() - interval '4 day', '+75554443322', null, 1),
+       (9, 5, 'ул. Родионова, 15-70', 200, now() - interval '3 day', '+76665554444', null, 1),
+       (10, 1, 'ул. Иванова, 14-5', 200, now() - interval '2 day', '+71234567890', 'Уйду гулять - звоните за 15 мин.', 1),
+       (11, 6, 'пр-т Ленина, 17-82', 200, now() - interval '1 day', '+75554443322', null, 1),
+       (12, 2, 'пр-т Ленина, 14-49', 200, now() - interval '4 day', '+70987654321', null, 1);
 
 insert into public.order_position (id, order_id, pizza_id, quantity, price)
 values (1, 1, 1, 2, 670),

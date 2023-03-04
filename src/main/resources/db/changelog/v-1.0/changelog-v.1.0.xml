@@ -196,40 +196,17 @@
                                  constraintName="fkey_users_role"
                                  referencedTableName="role" referencedColumnNames="id"/>
     </changeSet>
-    <changeSet id="14" author="alexey">
-        <preConditions>
-            <not>
-                <viewExists viewName="order_with_amount"/>
-            </not>
-        </preConditions>
-        <createView viewName="order_with_amount">
-            SELECT o.id,
-                   o.customer_id,
-                   o.delivery_address,
-                   o.delivery_cost,
-                   o.phone,
-                   o.comment,
-                   o.created_timestamp,
-                   sum(op.quantity * op.price) AS amount
-            FROM "order" o
-                     LEFT JOIN order_position op ON o.id = op.order_id
-            GROUP BY o.id;
-        </createView>
-    </changeSet>
-    <changeSet id="15" author="anastasia">
+    <changeSet id="14" author="anastasia">
         <preConditions>
             <tableExists tableName="pizza"/>
         </preConditions>
         <addColumn tableName="pizza">
-            <column name="image_name" type="varchar" defaultValue="SberTasteLogo.jpeg"/>
-        </addColumn>
-        <addColumn tableName="pizza">
-            <column name="image_location"
+            <column name="img_file"
                     type="varchar"
-                    defaultValue="/Users/anastasial/IdeaProjects/sbertaste/target/classes/SberTasteLogo.jpeg"/>
+                    defaultValue="\images\logo.jpeg"/>
         </addColumn>
     </changeSet>
-    <changeSet id="16" author="anastasia">
+    <changeSet id="15" author="anastasia">
         <preConditions>
             <not>
                 <tableExists tableName="delivery"/>
@@ -251,14 +228,13 @@
         </createTable>
         <createSequence sequenceName="delivery_id_seq" startValue="1" incrementBy="1"/>
     </changeSet>
-    <changeSet id="17" author="anastasia">
+    <changeSet id="16" author="anastasia">
         <preConditions>
             <tableExists tableName="order"/>
         </preConditions>
         <addColumn tableName="order">
             <column name="delivery_id"
-                    type="int"
-                    defaultValue="1">
+                    type="int">
                 <constraints nullable="false"/>
             </column>
         </addColumn>
@@ -267,6 +243,27 @@
                                  constraintName="fkey_delivery_order"
                                  referencedTableName="delivery"
                                  referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="17" author="alexey">
+        <preConditions>
+            <not>
+                <viewExists viewName="order_with_amount"/>
+            </not>
+        </preConditions>
+        <createView viewName="order_with_amount">
+            SELECT o.id,
+                   o.customer_id,
+                   o.delivery_address,
+                   o.delivery_id,
+                   o.delivery_cost,
+                   o.phone,
+                   o.comment,
+                   o.created_timestamp,
+                   sum(op.quantity * op.price) AS amount
+            FROM "order" o
+                     LEFT JOIN order_position op ON o.id = op.order_id
+            GROUP BY o.id;
+        </createView>
     </changeSet>
     <changeSet id="18" author="alexey" dbms="postgresql">
         <validCheckSum>ANY</validCheckSum>

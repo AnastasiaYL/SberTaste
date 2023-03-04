@@ -46,7 +46,7 @@ public class PizzaController extends CommonController<PizzaEntity, PizzaRequestD
 
     @PostMapping(value = "/image/upload/{pizzaId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<String> uploadImage(@PathVariable int pizzaId, @RequestParam("File") MultipartFile image) throws Exception {
+    public ResponseEntity<String> uploadImage(@PathVariable int pizzaId, @RequestParam("file") MultipartFile image) throws Exception {
         service.saveImage(image.getBytes(), image.getOriginalFilename(), pizzaId);
         return ResponseEntity.ok().body("Image uploaded successfully");
     }

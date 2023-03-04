@@ -25,10 +25,7 @@ public class PizzaEntity extends CommonEntity {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "image_name")
-    private String imageName;
-
-    @Column(name = "image_location")
-    private String imageLocation;
+    @Column(name = "img_file")
+    private String imgFile;
 
 }
